@@ -77,7 +77,7 @@ services:
       - RADARR_PORT=${RADARR_PORT}
     volumes:
       - ${CONFIG_DIR}/transmission:/config
-      - ${DOWNLOAD_DIR}:/downloads
+      - ${DOWNLOAD_DIR}:/downloadsklameš 
       - ${MEDIA_DIR}:/media
 
   filebot:
@@ -240,6 +240,26 @@ services:
     #  - "/dev/dri/card0:/dev/dri/card0"
     #  - "/dev/dri/renderD128:/dev/dri/renderD128"
 
+jellyfin:
+    image: linuxserver/jellyfin
+    container_name: jellyfin
+    restart: always
+    ports:
+      - "${JELLYFIN_WEB_PORT}:8096"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+      - VERSION=latest
+    volumes:
+      - ${CONFIG_DIR}/jellyfin:/config
+      - ${MEDIASERVER_CACHE}:/cache
+      - ${MEDIA_DIR}:/media
+    devices:
+      - "/dev/dri/card0:/dev/dri/card0"
+      - "/dev/dri/renderD128:/dev/dri/renderD128"
+
+
   tautulli:
     image: ghostserverd/tautulli
     container_name: tautulli
@@ -335,7 +355,7 @@ services:
       - "${PORTAINER_PORT}:9000"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ${CONFIG_DIR}/portainer:/data
+      - ${CONFIG_DIR}/portainer:/data´
 
   watchtower:
     image: containrrr/watchtower

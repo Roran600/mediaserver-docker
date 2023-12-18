@@ -1,27 +1,22 @@
- plex:
-    image: ghostserverd/plex
-    container_name: plex
+ jellyfin:
+    image: linuxserver/jellyfin
+    container_name: jellyfin
     restart: always
     ports:
-      - "${PLEX_WEB_PORT}:32400"
-      - "1900:1900"
-      - "3005:3005"
-      - "5353:5353"
-      - "8324:8324"
-      - "32410:32410"
-      - "32412:32412"
-      - "32413:32413"
-      - "32414:32414"
-      - "32469:32469"
+      - "${PLEX_WEB_PORT}:8096"
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TIMEZONE}
       - VERSION=latest
-      - PLUGIN_LIST=${PLUGIN_LIST}
     volumes:
-      - ${CONFIG_DIR}/plex:/config
+      - ${CONFIG_DIR}/jellyfin:/config
       - ${MEDIA_DIR}:/data
+
+      - /path/to/config:/config
+      - /path/to/cache:/cache
+      - /path/to/media:/media
+      - /path/to/media2:/media2:ro
     devices:
       - "/dev/dri/card0:/dev/dri/card0"
       - "/dev/dri/renderD128:/dev/dri/renderD128"
